@@ -16,7 +16,7 @@ import time
 
 start_time = time.time()
 
-nSamples = 800000  # 1000000 eslam
+nSamples = 1000000  # 1000000
 df1 = pd.read_csv('./dataset/APUF_XOR_Challenge_Parity_64_1Million.csv', header=None, chunksize=nSamples)
 df1 = df1.get_chunk()
 df2 = pd.read_csv('./dataset/7-xorpuf_1M.csv', header=None)
@@ -27,11 +27,11 @@ tf.set_random_seed(1)
 features = X.values
 labels = Y.values
 
-batch_size = 5000  # 14000 eslam
+batch_size = 5000 
 connection_size = 5  # maxconn+1
 ising_size = 4  # ising side length
-rank_val = 10  # eslam 1000
-l_rate = 1e-2  # eslam 1e-2
+rank_val = 100  # 
+l_rate = 1e-2  # 
 
 train_features, test_features, train_labels, test_labels = train_test_split(features, labels, test_size=0.2,
                                                                             random_state=42)
@@ -52,7 +52,7 @@ dataset = tf.data.Dataset.from_tensor_slices((features_placeholder, labels_place
 def main(rank=None, file=None, f_error=None, f_acc=None):
     with tf.Session() as sess:
 
-        #  y1 = tf.placeholder(tf.float32, shape=[None, 65, 65, 65, 65, 65, 65, 65])
+        #  y1 should be modified to contain as much entries are there are isingPUF nodes. The code is currently setup for a 4x4 Ising-PUF containing a total of 4x4=16 nodes 
         y1 = tf.placeholder(tf.float32, shape=[None, connection_size, connection_size, connection_size, connection_size,
                                                connection_size, connection_size, connection_size, connection_size,
                                                connection_size, connection_size, connection_size, connection_size,
@@ -68,7 +68,7 @@ def main(rank=None, file=None, f_error=None, f_acc=None):
 
         # cross entropy comparing y_ and y_conv
         vars1 = tf.trainable_variables()
-        lossL2 = tf.add_n([tf.nn.l2_loss(v) for v in vars1 if 'bias' not in v.name]) * 0.0001*1000
+        lossL2 = tf.add_n([tf.nn.l2_loss(v) for v in vars1 if 'bias' not in v.name]) * 0.0001
 
         cross_entropy = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(labels=y_, logits=out)) + lossL2
 
