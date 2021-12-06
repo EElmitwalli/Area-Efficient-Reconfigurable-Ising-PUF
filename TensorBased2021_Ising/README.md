@@ -1,3 +1,9 @@
+The code source is from [https://github.com/Praneshss/Tensor-Regression-based-Modeling-Attack-on-PUFs]
+
+The code has some modification to work on 4x4 C4 Ising-PUF, to modify for Ising-PUF with other sizes, the values of connection_size, ising_size and the structure of y1 need to be changed accordngly.
+
+We provide the original source readme file below:
+
 # Tensor-Regression-based-Modeling-Attack-on-PUFs
 A Computationally Efficient Tensor Regression Network based Modeling Attack on XOR Arbiter PUF and its Variants (ECP-TRN)
 
